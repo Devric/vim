@@ -1,0 +1,113 @@
+# ========================================
+#		    General
+# ========================================
+snippet log
+console.log($1)
+$0
+endsnippet
+
+snippet req
+var ${1} = require('${2:$1}')
+$0
+endsnippet
+
+snippet timeout "setTimeout function"
+setTimeout(function() {
+	${VISUAL}$0
+}${2:.bind(${3:this})}, ${1:10});
+endsnippet
+
+# ========================================
+#		    Function
+# ========================================
+snippet fun
+function ${1:name}($2) {
+    $0
+}
+endsnippet
+
+snippet func
+var ${1:name} = function($2) {
+    $0
+}
+endsnippet
+
+snippet class
+var $1 = (function() {
+    // Constructor
+    function $1($2) {
+	$3
+    }
+
+    return $1
+})()
+endsnippet
+
+snippet proto
+${1:class}.prototype.${2:method} = function(${3:arg}){
+    $0
+}
+endsnippet
+
+
+# ========================================
+#		    Dom
+# ========================================
+snippet get "Get Elements"
+getElement${1/(T)|.*/(?1:s)/}By${1:T}${1/(T)|(I)|.*/(?1:agName)(?2:d)/}('$2')
+endsnippet
+
+snippet :f "object method string"
+${1:, }$2 : function($3) {
+    $0
+}
+endsnippet
+
+snippet : "Key : val"
+${1:, }${2:key} : ${3:val}
+endsnippet
+
+# ========================================
+#		    Spec
+# ========================================
+snippet desc
+describe('$1', function() {
+    $0
+});
+endsnippet
+
+snippet it
+it('$1', function() {
+    $0
+});
+endsnippet
+
+
+# ========================================
+#		    Loop
+# ========================================
+snippet for "for i; iterations"
+var i=0, $1Len=$1.length
+for (; i < $1Len; i++) {
+    $2
+}
+endsnippet
+
+
+# ========================================
+#		    Condition
+# ========================================
+snippet if
+if ($1) {
+    $0
+}
+endsnippet
+
+snippet ife "if else"
+if ($1) {
+    $2
+} else {
+    $0
+}
+endsnippet
+

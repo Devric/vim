@@ -1,0 +1,34 @@
+snippet $
+$(${1:name})$0
+endsnippet
+
+snippet $@ "this"
+$(this)
+endsnippet
+
+snippet ajax
+$.ajax({
+    url: ${1:url}
+  , type: ${2:GET}
+  , data : ${3:data}
+}).done(function(data){
+    $4
+}).fail(function(data){
+    $5
+})
+$0
+endsnippet
+
+snippet on
+$(document).on(${1:'click'}, ${2:el}, ${3:func})
+endsnippet
+
+snippet off
+$(document).off(${1:'click'}, ${2:el})
+endsnippet
+
+snippet docr
+$(function(){
+    $1
+})
+endsnippet

@@ -3,6 +3,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
  if has('vim_starting')
    set nocompatible               " Be iMproved
+   set guifont=Droid\ Sans\ Mono\ for\ Powerline:h11
 
    " Required:
    set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -28,12 +29,18 @@ NeoBundle 'tpope/vim-surround'             " quickly change surounded tags quote
 NeoBundle 'Lokaltog/vim-easymotion'        " <leader><leader> (options: w,b, ......)
 NeoBundle 'tmhedberg/matchit'              " matching tags
 NeoBundle 'christoomey/vim-tmux-navigator' " provide movment integration with tmux, required for tmux script
-NeoBundle 'vim-scripts/compview'           " fast serach buffer <leader> v
-    " compview {
-        nnoremap <jeader>v :CompView<cr>
+NeoBundle 'vim-scripts/HTML-AutoCloseTag'  " fast close html tags
+NeoBundle 'sudo.vim'                       " edit permission files :e sudo:/etc/passwd
+NeoBundle 'vim-forrestgump'                " repl <leader> r
+NeoBundle 'chrisbra/NrrwRgn'               " narrow the region
+    " NrrwRgn {
+        vnoremap <Enter> :NR<cr>
     " }
 
-NeoBundle 'vim-forrestgump' " repl <leader> r
+NeoBundle 'vim-scripts/compview'           " fast serach buffer <leader> v
+    " compview {
+        nnoremap <leader>v :CompView<cr>
+    " }
 
 NeoBundle 'mattn/emmet-vim'
     " emmet {
@@ -42,7 +49,7 @@ NeoBundle 'mattn/emmet-vim'
 
 NeoBundle 'gsyodlygeek/tabular'
     " tabularize {
-        vnoremap <silent> <Enter> :Tabularize /
+        vnoremap <silent> <Space> :Tabularize /
         inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
         function! s:align()
           let p = '^\s*|\s.*\s|\s*$'
@@ -57,9 +64,32 @@ NeoBundle 'gsyodlygeek/tabular'
     "}
 
 NeoBundle 'AndrewRadev/splitjoin.vim'
-    " splitjoin {
-        nmap <Leader>sj :SplitjoinJoin<cr>
-        nmap <Leader>ss :SplitjoinSplit<cr>
+NeoBundle 'SirVer/ultisnips'  " snippets
+    " ultra snippets {
+        function! g:UltiSnips_Complete()
+            call UltiSnips#ExpandSnippet()
+            if g:ulti_expand_res == 0
+                if pumvisible()
+                    return "\<C-n>"
+                else
+                    call UltiSnips#JumpForwards()
+                    if g:ulti_jump_forwards_res == 0
+                   return "\<TAB>"
+                    endif
+                endif
+            endif
+            return ""
+        endfunction
+
+        au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+        let g:UltiSnipsJumpForwardTrigger="<tab>"
+        let g:UltiSnipsListSnippets="<c-e>"
+        " this mapping Enter key to <C-y> to chose the current highlight item 
+        " and close the selection list, same as other IDEs.
+        " CONFLICT with some plugins like tpope/Endwise
+        inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+        let g:ycm_key_list_select_completion=[]
+        let g:ycm_key_list_previous_completion=[]
     " }
 
 " =================== Completions ================
@@ -95,12 +125,8 @@ NeoBundle 'int3/vim-extradite'     " git history of current file
     " }
 
 " ================== IDE =========================
-NeoBundle 'rking/ag.vim'
-    " ag {
-        let g:ackprg = 'ag --nogroup --nocolor --column'
-    " }
+NeoBundle 'fholgado/minibufexpl.vim'
 
-NeoBundle 'vim-scripts/TabBar'
 NeoBundle 'scrooloose/nerdtree' 
     " Nerdtree {
         map <F1> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
@@ -120,37 +146,38 @@ NeoBundle 'majutsushi/tagbar'
     " }
 
 NeoBundle 'kien/ctrlp.vim' 
-    " ctrlp {
-        let g:ctrlp_map = '<c-p_p>'
-        let g:ctrlp_working_path_mode = '.' " make it open the root directory
-        nnoremap <leader>x :CtrlP<CR>
-        nnoremap <leader>X :ClearCtrlPCache<cr>\|:CtrlP<CR>
-    " }
 
+NeoBundle 'rking/ag.vim'
+    " ag {
+        let g:ackprg = 'ag --nogroup --nocolor --column'
+        nmap <leader>g :Ack <C-R>=expand("<cword>")<CR><CR>
+    " }
+    "
 " ================== Syntax ======================
 NeoBundle '2072/PHP-Indenting-for-VIm'
 NeoBundle 'JulesWang/css.vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'lunaru/vim-less'
 NeoBundle 'othree/html5.vim'
-NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'mutewinter/nginx.vim'
 NeoBundle 'moll/vim-node' " Helpers for working in NodeJS
 
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+
 " ================== Lint ========================
 NeoBundle 'scrooloose/syntastic'
     " syntastic {
         let g:synstatic_check_on_open=0
-
-        let g:syntastic_error_symbol = '✗'            " Error Symbol
-        let g:syntastic_warning_symbol = '⚠'          " Warning Symbol
-        let g:syntastic_style_error_symbol = '⚡'      " Style Error Symbol
-        let g:syntastic_style_warning_symbol = '⚡'    " Style Warning Symbol
+        let g:syntastic_error_symbol='✗'         " Error Symbol
+        let g:syntastic_warning_symbol='⚠'       " Warning Symbol
+        let g:syntastic_style_error_symbol='⚡'   " Style Error Symbol
+        let g:syntastic_style_warning_symbol='⚡' " Style Warning Symbol
 
         let g:Synstatic_javascript_jshint_conf="~/.jshintrc"
     " }
+
 
 
 call neobundle#end()
@@ -230,21 +257,25 @@ set shiftwidth=4
 set shiftround
 set nojoinspaces
 
-
 """""""""""""""""""""""""""""""""
 " Default Key Bindings
 """""""""""""""""""""""""""""""""
 let mapleader= ";"
 nmap <space> :
 imap jk <esc>
+imap <C-c> <esc>
 
 imap <Leader>date   <C-R>=strftime("%d/%m/%y")<CR>
 imap <Leader>time   <C-R>=strftime("%T")<CR>
 
-nmap <silent> <leader>n :silent :nohlsearch<CR> " \n to turn off search highlighting
-nmap <silent> <leader>l :set list!<CR>          " \l to toggle visible whitespace
-imap <silent> <S-tab> <C-v><tab>                " Shift-tab to insert a hard tab
-vnoremap x "_x                                  " allow deleting selection without updating the clipboard (yank buffer)
+" \n to turn off search highlighting
+nmap <silent> <leader>h :silent :nohlsearch<CR> 
+" \l to toggle visible whitespace
+nmap <silent> <leader>l :set list!<CR>          
+" Shift-tab to insert a hard tab
+imap <silent> <S-tab> <C-v><tab>                
+" allow deleting selection without updating the clipboard (yank buffer)
+vnoremap x "_x                                  
 
 map <leader>bd :bd<cr>
 
@@ -311,6 +342,7 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => backup files
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set noswapfile
 function! InitBackupDir()
     let separator = "."
     let parent = $HOME .'/' . separator . 'vim/'
@@ -348,3 +380,31 @@ function! InitBackupDir()
     endif
 endfunction          
 call InitBackupDir()
+
+" ctrlp {
+    let g:ctrlp_map = '<c-p_p>'
+    let g:ctrlp_working_path_mode = '.' " make it open the root directory
+    nnoremap <leader>x :CtrlP<CR>
+    nnoremap <leader>X :ClearCtrlPCache<cr>\|:CtrlP<CR>
+" }
+
+" minibuffer explore {
+    let g:miniBufExplModSelTarget      = 1 " active when using with taglist
+    let g:miniBufExplorerMoreThanOne   = 2 " only activate when more then one buffer
+    let g:miniBufExplUseSingleClick    = 1 " single click to change file
+    let g:miniBufExplMapWindowNavVim   = 1 " hjkl mappig
+    let g:miniBufExplSplitBelow        = 0 " 1 below, 0 above
+    let g:miniBufExplMapCTabSwitchBufs = 1 " tab s-tab navigation
+    let g:bufExplorerSortBy            = "name"
+    autocmd BufRead,BufNew :call UMiniBufExplorer
+    map <leader>u :MBEToggle<cr>
+" }
+
+" vim cant detect json by default
+"au BufRead,BufNewFile *.json setf json
+
+" splitjoin {
+    nmap <Leader>sj :SplitjoinJoin<cr>
+    nmap <Leader>ss :SplitjoinSplit<cr>
+" }
+
