@@ -147,12 +147,7 @@ NeoBundle 'majutsushi/tagbar'
 
 NeoBundle 'kien/ctrlp.vim' 
 
-NeoBundle 'rking/ag.vim'
-    " ag {
-        let g:ackprg = 'ag --nogroup --nocolor --column'
-        nmap <leader>g :Ack <C-R>=expand("<cword>")<CR><CR>
-    " }
-    "
+NeoBundle 'mileszs/ack.vim'
 " ================== Syntax ======================
 NeoBundle '2072/PHP-Indenting-for-VIm'
 NeoBundle 'JulesWang/css.vim'
@@ -381,6 +376,14 @@ function! InitBackupDir()
 endfunction          
 call InitBackupDir()
 
+if has("autocmd")
+  " When editing a file, always jump to the last cursor position
+  autocmd BufReadPost *
+  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+  \   exe "normal g'\"" |
+  \ endif
+endif
+
 " ctrlp {
     let g:ctrlp_map = '<c-p_p>'
     let g:ctrlp_working_path_mode = '.' " make it open the root directory
@@ -408,3 +411,7 @@ call InitBackupDir()
     nmap <Leader>ss :SplitjoinSplit<cr>
 " }
 
+" ag {
+    let g:ackprg = 'ag --nogroup --nocolor --column'
+    nmap <leader>g :Ack <C-R>=expand("<cword>")<CR><CR>
+" }
