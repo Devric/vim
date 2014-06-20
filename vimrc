@@ -149,17 +149,10 @@ NeoBundle 'majutsushi/tagbar'
     " }
 
 " ================== Syntax ======================
-NeoBundle '2072/PHP-Indenting-for-VIm'
 NeoBundle 'JulesWang/css.vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
-NeoBundle 'lunaru/vim-less'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'mutewinter/nginx.vim'
 NeoBundle 'moll/vim-node' " Helpers for working in NodeJS
-
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'sheerun/vim-polyglot' 
 
 " ================== Lint ========================
 NeoBundle 'scrooloose/syntastic'
@@ -263,6 +256,13 @@ imap <silent> <S-tab> <C-v><tab>
 " allow deleting selection without updating the clipboard (yank buffer)
 vnoremap x "_x                                  
 
+
+" faster back space
+inoremap <c-h> <bs>
+
+" fast function
+inoremap <c-l> var 
+
 map <leader>bd :bd<cr>
 
 " tab configurations
@@ -311,6 +311,9 @@ else
 endif
 
 set pastetoggle=<F9>
+
+" save file in normal mode
+nnoremap s :w<cr>
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
@@ -375,6 +378,9 @@ if has("autocmd")
   \ if line("'\"") > 0 && line ("'\"") <= line("$") |
   \   exe "normal g'\"" |
   \ endif
+
+" Resize splits when the window is resized
+  au VimResized * exe "normal! \<c-w>="
 endif
 
 " ctrlp {
@@ -399,6 +405,11 @@ endif
 " splitjoin {
     nmap <Leader>sj :SplitjoinJoin<cr>
     nmap <Leader>ss :SplitjoinSplit<cr>
+" }
+
+" surround {
+    " remap shift-s to just s
+    vmap s S
 " }
 
 " ag {
