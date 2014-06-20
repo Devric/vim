@@ -126,6 +126,9 @@ NeoBundle 'int3/vim-extradite'     " git history of current file
 
 " ================== IDE =========================
 NeoBundle 'fholgado/minibufexpl.vim'
+NeoBundle 'kien/ctrlp.vim' 
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'zoeesilcock/vim-caniuse' " can i use :Caniuse border-radius
 
 NeoBundle 'scrooloose/nerdtree' 
     " Nerdtree {
@@ -145,9 +148,6 @@ NeoBundle 'majutsushi/tagbar'
         nnoremap <F3> :TagbarToggle<CR>
     " }
 
-NeoBundle 'kien/ctrlp.vim' 
-
-NeoBundle 'mileszs/ack.vim'
 " ================== Syntax ======================
 NeoBundle '2072/PHP-Indenting-for-VIm'
 NeoBundle 'JulesWang/css.vim'
@@ -163,15 +163,6 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascr
 
 " ================== Lint ========================
 NeoBundle 'scrooloose/syntastic'
-    " syntastic {
-        let g:synstatic_check_on_open=0
-        let g:syntastic_error_symbol='✗'         " Error Symbol
-        let g:syntastic_warning_symbol='⚠'       " Warning Symbol
-        let g:syntastic_style_error_symbol='⚡'   " Style Error Symbol
-        let g:syntastic_style_warning_symbol='⚡' " Style Warning Symbol
-
-        let g:Synstatic_javascript_jshint_conf="~/.jshintrc"
-    " }
 
 
 
@@ -333,6 +324,8 @@ autocmd! BufWritePost :%s/\s\+$//e"
 "Ignore these files when completing names and in Explorer
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif"
 
+" vim cant detect json by default
+au BufRead,BufNewFile *.json setf json
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => backup files
@@ -403,9 +396,6 @@ endif
     map <leader>u :MBEToggle<cr>
 " }
 
-" vim cant detect json by default
-"au BufRead,BufNewFile *.json setf json
-
 " splitjoin {
     nmap <Leader>sj :SplitjoinJoin<cr>
     nmap <Leader>ss :SplitjoinSplit<cr>
@@ -415,3 +405,18 @@ endif
     let g:ackprg = 'ag --nogroup --nocolor --column'
     nmap <leader>g :Ack <C-R>=expand("<cword>")<CR><CR>
 " }
+"
+" syntastic {
+    let g:syntastic_javascript_checkers=['jshint']
+    let g:Synstatic_javascript_jshint_conf="~/.jshintrc"
+
+    let g:syntastic_aggregate_errors=1
+    let g:synstatic_check_on_open=0
+
+    let g:syntastic_enable_signs=1
+    let g:syntastic_error_symbol='✗'         " Error Symbol
+    let g:syntastic_warning_symbol='⚠'       " Warning Symbol
+    let g:syntastic_style_error_symbol='⚡'   " Style Error Symbol
+    let g:syntastic_style_warning_symbol='⚡' " Style Warning Symbol
+" }
+
