@@ -20,6 +20,8 @@ NeoBundle 'ap/vim-css-color'                " highlight css colours
 
 NeoBundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
+" need for ctrlSpace
+let g:airline_exclude_preview = 1
 
 NeoBundle 'myusuf3/numbers.vim' " relative numbering toggle
 NeoBundle 'gregsexton/MatchTag' " Highlights matching tags when the cursor is over one of them
@@ -146,6 +148,11 @@ NeoBundle 'majutsushi/tagbar'
     " tagbar {
         let g:tagbar_usearrows = 1
         nnoremap <F3> :TagbarToggle<CR>
+    " }
+
+NeoBundle 'szw/vim-ctrlspace'
+    " ctrlSpace {
+        g:ctrlspace_load_last_workspace_on_start=1
     " }
 
 " ================== Syntax ======================
