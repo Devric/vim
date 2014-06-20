@@ -47,7 +47,7 @@ NeoBundle 'mattn/emmet-vim'
         let g:use_emmet_complete_tag = 1
     " }
 
-NeoBundle 'gsyodlygeek/tabular'
+NeoBundle 'godlygeek/tabular'
     " tabularize {
         vnoremap <silent> <Space> :Tabularize /
         inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
@@ -94,7 +94,7 @@ NeoBundle 'SirVer/ultisnips'  " snippets
 
 " =================== Completions ================
 NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'docunext/closetag.vim'
 
