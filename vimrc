@@ -34,6 +34,9 @@ NeoBundle 'christoomey/vim-tmux-navigator' " provide movment integration with tm
 NeoBundle 'vim-scripts/HTML-AutoCloseTag'  " fast close html tags
 NeoBundle 'sudo.vim'                       " edit permission files :e sudo:/etc/passwd
 NeoBundle 'vim-forrestgump'                " repl <leader> r
+
+NeoBundle 'matze/vim-move'                 " moving lines <A-k>
+
 NeoBundle 'chrisbra/NrrwRgn'               " narrow the region
     " NrrwRgn {
         vnoremap <Enter> :NR<cr>
@@ -152,7 +155,7 @@ NeoBundle 'majutsushi/tagbar'
 
 NeoBundle 'szw/vim-ctrlspace'
     " ctrlSpace {
-        g:ctrlspace_load_last_workspace_on_start=1
+        let g:ctrlspace_load_last_workspace_on_start=1
     " }
 
 " ================== Syntax ======================
@@ -283,6 +286,10 @@ map <leader>s :vsp<cr>
 map <right> :bn<cr>
 map <left> :bp<cr>
 
+" Shift Arrows to switch tabs
+map <s-right> :tabnext<cr>
+map <s-left> :tabprevious<cr>
+
 " quick indenting
 vnoremap <C-h> <ESC>v<<ESC>
 vnoremap <C-l> <ESC>v><ESC>
@@ -318,12 +325,17 @@ else
 endif
 
 set pastetoggle=<F9>
+" disable paste mode after leave insert
+au InsertLeave * set nopaste
 
 " save file in normal mode
 nnoremap s :w<cr>
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Q to repeat last macro @@
+map Q @@
 
 " Change Working Directory to that of the current file
 cmap cd. lcd %:p:h<cr>"
@@ -336,6 +348,18 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 
 " vim cant detect json by default
 au BufRead,BufNewFile *.json setf json
+
+
+" force saving file that requires root permission
+cmap w!! %!sudo tee > /dev/null %
+
+" scroll history
+cnoremap <C-j> <t_kd>
+cnoremap <C-k> <t_ku>
+
+" jump to begin / end
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => backup files
@@ -378,6 +402,27 @@ function! InitBackupDir()
     endif
 endfunction          
 call InitBackupDir()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => allow you yank to mac clipboard
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if version >= 730 && has("macunix")
+  set clipboard=unnamed
+end
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => persist undo on reopening file
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" This is only present in 7.3+
+" :help undo-persistence
+if exists("+undofile")
+  if isdirectory($HOME . '/.vim/undo') == 0
+    :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+  endif
+  set undodir=./.vim-undo//
+  set undodir+=~/.vim/undo//
+  set undofile
+endif
 
 if has("autocmd")
   " When editing a file, always jump to the last cursor position
@@ -438,3 +483,6 @@ endif
     let g:syntastic_style_warning_symbol='⚡' " Style Warning Symbol
 " }
 
+" vim-move {
+    let g:move_key_modifier = 'C'
+" }
