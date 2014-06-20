@@ -290,6 +290,9 @@ map <left> :bp<cr>
 map <s-right> :tabnext<cr>
 map <s-left> :tabprevious<cr>
 
+" quit all
+map <leader>q :qa<cr>
+
 " quick indenting
 vnoremap <C-h> <ESC>v<<ESC>
 vnoremap <C-l> <ESC>v><ESC>
