@@ -34,8 +34,9 @@ NeoBundle 'christoomey/vim-tmux-navigator' " provide movment integration with tm
 NeoBundle 'vim-scripts/HTML-AutoCloseTag'  " fast close html tags
 NeoBundle 'sudo.vim'                       " edit permission files :e sudo:/etc/passwd
 NeoBundle 'vim-forrestgump'                " repl <leader> r
-
 NeoBundle 'matze/vim-move'                 " moving lines <A-k>
+
+NeoBundle '29decibel/vim-stringify'        " fast stringfy, <leader>G // set within this vim script
 
 NeoBundle 'chrisbra/NrrwRgn'               " narrow the region
     " NrrwRgn {
@@ -508,4 +509,7 @@ endif
 " vim-move {
     let g:move_key_modifier = 'C'
 " }
-"
+
+" stringify {
+    map <leader>g :call Stringify()<CR>
+" }
