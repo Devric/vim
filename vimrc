@@ -263,9 +263,25 @@ nmap <silent> <leader>h :silent :nohlsearch<CR>
 nmap <silent> <leader>l :set list!<CR>          
 " Shift-tab to insert a hard tab
 imap <silent> <S-tab> <C-v><tab>                
-" allow deleting selection without updating the clipboard (yank buffer)
-vnoremap x "_x                                  
 
+inoremap <expr> <Tab> SkipClosingParentheses()
+function! SkipClosingParentheses()
+  let line = getline('.')
+  let current_char = line[col('.')-1]
+ 
+  "Ignore EOL
+  if col('.') == col('$')
+    return "\t"
+  end
+ 
+  return stridx(']})', current_char)==-1 ? "\t" : "\<Right>"
+endfunction
+
+" change background faster
+nnoremap <leader>bg :exe 'set bg=' . (&bg == 'dark' ? 'light' : 'dark')<CR>
+
+" allow deleting selection without updating the clipboard (yank buffer)
+vnoremap x "_x
 
 " faster back space
 inoremap <c-h> <bs>
@@ -476,6 +492,9 @@ endif
     let g:syntastic_javascript_checkers=['jshint']
     let g:Synstatic_javascript_jshint_conf="~/.jshintrc"
 
+    " ignore angular
+    let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
     let g:syntastic_aggregate_errors=1
     let g:synstatic_check_on_open=0
 
@@ -489,3 +508,4 @@ endif
 " vim-move {
     let g:move_key_modifier = 'C'
 " }
+"
