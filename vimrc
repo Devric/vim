@@ -285,10 +285,12 @@ nnoremap <leader>bg :exe 'set bg=' . (&bg == 'dark' ? 'light' : 'dark')<CR>
 vnoremap x "_x
 
 " faster back space
-inoremap <c-h> <bs>
+inoremap <C-b> <bs>
 
-" fast function
-inoremap <c-l> var 
+inoremap <C-h> <C-o>h
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-l> <C-o>l
 
 map <leader>bd :bd<cr>
 
