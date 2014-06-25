@@ -510,10 +510,8 @@ endif
 
 " vim-move {
     let g:move_map_keys = 0
-    vmap <S-j> <Plug>MoveBlockDown
     vmap <S-k> <Plug>MoveBlockUp
-    nmap <S-j> <Plug>MoveLineDown
-    nmap <S-k> <Plug>MoveLineUp
+    vmap <S-j> <Plug>MoveBlockDown
 " }
 
 " stringify {
