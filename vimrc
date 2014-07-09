@@ -164,6 +164,7 @@ NeoBundle 'JulesWang/css.vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'moll/vim-node' " Helpers for working in NodeJS
 NeoBundle 'sheerun/vim-polyglot' 
+NeoBundle 'mxw/vim-jsx' 
 
 " ================== Lint ========================
 NeoBundle 'scrooloose/syntastic'
