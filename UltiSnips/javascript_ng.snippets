@@ -1,0 +1,55 @@
+snippet $v "$scope.$v  : ng"
+$scope.${1:variable} = ${2:value};
+$0
+endsnippet
+
+snippet $w "$scope.$watch() : ng"
+$scope.$watch('${1:watchExpr}',function(newValue, oldValue) {
+    ${2}
+});
+$0
+endsnippet
+
+snippet $on "$scope.$on -> : ng"
+$scope.$on('${1:eventName}', function(event, ${2:args}) {
+  $0
+});
+endsnippet
+
+
+snippet $b "$scope.$broadcast : ng"
+$scope.$broadcast('${1:eventName}', ${2:eventArgs});
+$0
+endsnippet
+
+
+snippet $e "$scope.e :ng"
+$scope.$emit('${1:eventName}', ${2:eventArgs});
+$0
+endsnippet
+
+snippet ngf "factory()"
+.factory('${1:name}', function(${2:deps}){
+    $0
+})
+endsnippet
+
+snippet ngs "service()"
+.service('${1:name}', function(${2:deps}){
+    $0
+})
+endsnippet
+
+snippet ngd "directive()"
+.directive('${1:name}', function(){
+    return {
+	restrict: "$1"
+      , replace: true
+      , template : "$2"
+      , link : function(scope,elem,attr) {
+	    $0
+      }
+    }
+})
+endsnippet
+

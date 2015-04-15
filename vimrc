@@ -13,6 +13,8 @@
  call neobundle#begin(expand('~/.vim/bundle/'))
  NeoBundleFetch 'Shougo/neobundle.vim'
 
+ set shell=/bin/bash\ -i
+
 " =================== UI =========================
 NeoBundle 'nathanaelkane/vim-indent-guides' " indenting guidelines <leader> ig
 NeoBundle 'chriskempson/base16-vim'         " ColourScheme
@@ -106,7 +108,7 @@ NeoBundle 'docunext/closetag.vim'
 
 NeoBundle 'marijnh/tern_for_vim'
     " tern {
-            let g:tern_show_argument_hints   = 'on_move'
+            let g:tern_show_argument_hints   = 'on_hold'
             let g:tern_show_signature_in_pum = 1
             map <leader>tt :TernType<CR>
             map <leader>td :TernDef<CR>
@@ -134,7 +136,13 @@ NeoBundle 'int3/vim-extradite'     " git history of current file
 NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'kien/ctrlp.vim' 
 NeoBundle 'mileszs/ack.vim'
+    " Ack {
+        map <Leader>f :Ack <cword><cr>
+    " }
+
 NeoBundle 'zoeesilcock/vim-caniuse' " can i use :Caniuse border-radius
+NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'severin-lemaignan/vim-minimap'
 
 NeoBundle 'scrooloose/nerdtree' 
     " Nerdtree {
@@ -159,8 +167,11 @@ NeoBundle 'szw/vim-ctrlspace'
         let g:ctrlspace_load_last_workspace_on_start=1
     " }
 
+NeoBundle 'tpope/vim-dispatch'
+
 " ================== Syntax ======================
 NeoBundle 'JulesWang/css.vim'
+NeoBundle 'wavded/vim-stylus'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'moll/vim-node' " Helpers for working in NodeJS
 NeoBundle 'sheerun/vim-polyglot' 
@@ -494,7 +505,7 @@ endif
 "
 " syntastic {
     let g:syntastic_javascript_checkers=['jshint']
-    let g:Synstatic_javascript_jshint_conf="~/.jshintrc"
+    let g:syntastic_javascript_jshint_conf = $HOME . '/.jshintrc'
 
     " ignore angular
     let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
@@ -507,6 +518,7 @@ endif
     let g:syntastic_warning_symbol='⚠'       " Warning Symbol
     let g:syntastic_style_error_symbol='⚡'   " Style Error Symbol
     let g:syntastic_style_warning_symbol='⚡' " Style Warning Symbol
+    let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 " }
 
 " vim-move {
