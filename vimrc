@@ -134,7 +134,7 @@ NeoBundle 'int3/vim-extradite'     " git history of current file
 
 " ================== IDE =========================
 NeoBundle 'fholgado/minibufexpl.vim'
-NeoBundle 'kien/ctrlp.vim' 
+"NeoBundle 'kien/ctrlp.vim' 
 NeoBundle 'mileszs/ack.vim'
     " Ack {
         map <Leader>f :Ack <cword><cr>
@@ -470,10 +470,10 @@ if has("autocmd")
 endif
 
 " ctrlp {
-    let g:ctrlp_map = '<c-p_p>'
-    let g:ctrlp_working_path_mode = '.' " make it open the root directory
-    nnoremap <leader>x :CtrlP<CR>
-    nnoremap <leader>X :ClearCtrlPCache<cr>\|:CtrlP<CR>
+"    let g:ctrlp_map = '<c-p_p>'
+"    let g:ctrlp_working_path_mode = '.' " make it open the root directory
+"    nnoremap <leader>x :CtrlP<CR>
+"    nnoremap <leader>X :ClearCtrlPCache<cr>\|:CtrlP<CR>
 " }
 
 " minibuffer explore {
@@ -529,4 +529,9 @@ endif
 
 " stringify {
     map <leader>g :call Stringify()<CR>
+" }
+
+" fzf {
+    set rtp+=~/.fzf
+    nnoremap <leader>x :FZF<CR>
 " }
